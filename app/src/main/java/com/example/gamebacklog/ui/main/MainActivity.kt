@@ -1,5 +1,6 @@
 package com.example.gamebacklog.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gamebacklog.R
 import com.example.gamebacklog.model.Game
+import com.example.gamebacklog.ui.add.AddActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -67,7 +69,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openAddGame() {
-        TODO("Not yet implemented")
+
+        val intent = Intent(this, AddActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

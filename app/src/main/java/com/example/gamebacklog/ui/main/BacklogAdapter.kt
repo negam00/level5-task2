@@ -16,7 +16,7 @@ class BacklogAdapter(private val games: List<Game>) :
         fun bind(game: Game) {
             itemView.tvGameTitle.text = game.title
             itemView.tvGamePlatform.text = game.platform
-            itemView.tvGameReleaseDate.text = game.releaseDate.toString()
+            itemView.tvGameReleaseDate.text = itemView.context.getString(R.string.release_date, game.releaseDate)
         }
     }
 
