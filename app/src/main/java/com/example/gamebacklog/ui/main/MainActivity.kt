@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gamebacklog.R
 import com.example.gamebacklog.model.Game
 import com.example.gamebacklog.ui.add.AddActivity
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -63,15 +64,19 @@ class MainActivity : AppCompatActivity() {
                 val gameToDelete = gameBacklog[position]
 
                 viewModel.deleteGame(gameToDelete)
+                Snackbar.make(rvGames, "Deleted game ${gameToDelete.title}", Snackbar.LENGTH_LONG)
+                    .setAction("UNDO") {
+                    viewModel.addGame(gameToDelete)
+                }.show()
             }
         }
         return ItemTouchHelper(callback)
     }
 
     private fun openAddGame() {
-
         val intent = Intent(this, AddActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -87,6 +92,12 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_delete_games -> {
                 viewModel.deleteAllGames()
+                Snackbar.make(rvGames, "Deleted all games!", Snackbar.LENGTH_LONG)
+                    .setAction("UNDO") {
+                        gameBacklog.forEach{
+                            viewModel.addGame(it)
+                        }
+                    }.show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
